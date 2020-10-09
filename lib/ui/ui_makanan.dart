@@ -19,31 +19,31 @@ class UIMakanan {
                             makanan: makanan,
                           )));
             },
-            child: Hero(
-                tag: makanan.namaMkn,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Card(
+                elevation: 7,
+                shadowColor: Colors.blue,
                 child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Card(
-                    elevation: 7,
-                    shadowColor: Colors.blue,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            makanan.namaMkn,
-                            style: TextStyle(fontSize: 25),
-                          ),
-                          CircleAvatar(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        makanan.namaMkn,
+                        style: TextStyle(fontSize: 25),
+                      ),
+                      Hero(
+                          tag: makanan.namaMkn,
+                          child: CircleAvatar(
                             backgroundImage: AssetImage(makanan.gambarMkn),
                             radius: 28,
-                          )
-                        ],
-                      ),
-                    ),
+                          ))
+                    ],
                   ),
-                )),
+                ),
+              ),
+            ),
           );
         });
   }
