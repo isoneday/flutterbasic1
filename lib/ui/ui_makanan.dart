@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:myfirstapp_flutter/data/data_makanan.dart';
 import 'package:myfirstapp_flutter/model/model_makanan.dart';
+import 'package:myfirstapp_flutter/screens/makanan_screen.dart';
 
 class UIMakanan {
   ListView buildListView() {
@@ -10,7 +11,14 @@ class UIMakanan {
           ModelMakanan makanan = DataMakanan.getItemMakanan(index);
           return InkWell(
             splashColor: Colors.red,
-            onTap: () {},
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => DetailMakanan(
+                            makanan: makanan,
+                          )));
+            },
             child: Hero(
                 tag: makanan.namaMkn,
                 child: Padding(
@@ -68,5 +76,28 @@ class UIMakanan {
             ),
           );
         });
+  }
+
+  Widget buildDetailMakanan(ModelMakanan makanan, BuildContext context) {
+    return Column(
+      children: [
+        InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Hero(
+                tag: makanan.namaMkn, child: Image.asset(makanan.gambarMkn))),
+        Text(
+          makanan.namaMkn,
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          makanan.detailMkn,
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        )
+      ],
+    );
   }
 }
