@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myfirstapp_flutter/screens/camera_screen.dart';
 import 'package:myfirstapp_flutter/screens/home_screen.dart';
 import 'package:myfirstapp_flutter/screens/makanan_screen.dart';
+import 'package:myfirstapp_flutter/screens/quiz_screen.dart';
 
 import 'screens/minuman_screen.dart';
 import 'screens/portalberita_screen.dart';
@@ -49,6 +50,7 @@ class MyApp extends StatelessWidget {
         UtamaScreen.id: (context) => UtamaScreen(),
         WaScreen.id: (context) => WaScreen(),
         CameraScreen.id: (context) => CameraScreen(),
+        QuizScreen.id: (context) => QuizScreen(),
         // DetailMakanan.id: (context) => DetailMakanan(),
         // WebMakanan.id: (context) => WebMakanan(),
       },
