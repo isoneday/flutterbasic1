@@ -47,6 +47,74 @@ class UtamaScreen extends StatelessWidget {
               ),
             ),
           ],
+        ),
+        drawer: Drawer(
+          child: ListView(
+            children: [
+              DrawerHeader(
+                  child: Row(
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(
+                        "https://www.pavilionweb.com/wp-content/uploads/2017/03/man-300x300.png"),
+                  ),
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              "Username : iswandi",
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Flexible(
+                            child: Text(
+                              "Email : iswandi.saputra11@gmail.com",
+                              style: TextStyle(
+                                  fontSize: 12, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                ],
+              )),
+              ListTile(
+                title: Text("Makanan"),
+                onTap: () {
+                  Navigator.pushNamed(context, MakananScreen.id);
+                },
+              ),
+              Divider(
+                color: Colors.black,
+              ),
+              ListTile(
+                title: Text("Portal berita"),
+                onTap: () {
+                  Navigator.pushNamed(context, PortalBeritaScreen.id);
+                },
+              ),
+              Divider(
+                color: Colors.black,
+              ),
+              ListTile(
+                title: Text("Camera"),
+                onTap: () {
+                  Navigator.pushNamed(context, CameraScreen.id);
+                },
+              ),
+              Divider(
+                color: Colors.black,
+              ),
+            ],
+          ),
         ));
   }
 
