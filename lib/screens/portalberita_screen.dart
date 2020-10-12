@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:http/http.dart' as http;
 import 'package:myfirstapp_flutter/model/model_portaberita.dart';
+import 'package:myfirstapp_flutter/network/network_berita.dart';
 import 'package:myfirstapp_flutter/ui/ui_portalberita.dart';
 import 'package:toast/toast.dart';
 
@@ -14,8 +16,9 @@ class PortalBeritaScreen extends StatefulWidget {
 
 class _PortalBeritaScreenState extends State<PortalBeritaScreen> {
   bool loading;
-  List itemListBerita;
+  List<Articles> itemListBerita;
   UIPortalBerita portalBerita = UIPortalBerita();
+  NetworkBerita networkBerita = NetworkBerita();
   @override
   void initState() {
     // TODO: implement initState
@@ -36,27 +39,77 @@ class _PortalBeritaScreenState extends State<PortalBeritaScreen> {
 
   getDataaBerita() async {
     loading = true;
-    String url =
-        "https://newsapi.org/v2/everything?q=covid&apiKey=9ba80533c8274efe96cb442df3512e5b";
-    var response = await http.get(Uri.encodeFull(url));
-    print("result00 : ${response.toString()}");
-    if (response.statusCode == 200) {
-      Toast.show("sukses menampilkan data", context);
-      var data = json.decode(response.body);
-      var articles = data["articles"] as List;
-      print("result11 : ${data.toString()}");
-      setState(() {
-        loading = false;
-        itemListBerita = articles
-            .map<Articles>((value) => Articles.fromJson(value))
-            .toList();
-      });
+    networkBerita.getDataBeritabyKeyword().then((response) {
+      if (response.status == "ok") {
+        var articles2 = response.articles;
+        print("yes,berhasil" + response.status);
+        setState(() {
+          loading = false;
+          itemListBerita = articles2;
+        });
+        if (response.totalResults == 0) {
+          Toast.show("tidak ada data", context);
+          setState(() {
+            loading = false;
+          });
+        }
+      } else {
+        Toast.show("gagal menampilkan data", context);
+        setState(() {
+          loading = false;
+        });
+      }
+    }).catchError(getError);
+  }
+
+  getError(error) {
+    setState(() {
+      loading = false;
+    });
+    if (error is NotFoundException) {
+      print("not found");
     } else {
-      Toast.show("gagal menampilkan data", context);
-      setState(() {
-        loading = false;
-      });
+      Toast.show("gagal ", context);
     }
-    return itemListBerita;
+  }
+}
+
+class DetailBerita extends StatelessWidget {
+  static String id = "detailBerita";
+  UIPortalBerita portalBerita = UIPortalBerita();
+  Articles berita;
+  // DetailBerita(this.makanan, {this.nama});
+  DetailBerita({Key key, @required this.berita}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          title: Text(berita.title),
+          actions: [
+            IconButton(
+                icon: Icon(Icons.link),
+                onPressed: () {
+                  Navigator.pushNamed(context, WebBerita.id,
+                      arguments: berita.url);
+                })
+          ],
+        ),
+        body: portalBerita.buildDetailBerita(berita, context));
+  }
+}
+
+class WebBerita extends StatelessWidget {
+  static String id = "webberita";
+  String webBerita;
+  WebBerita({Key key, @required this.webBerita}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return WebviewScaffold(
+      url: webBerita,
+      appBar: AppBar(
+        title: Text("Berita"),
+      ),
+    );
   }
 }

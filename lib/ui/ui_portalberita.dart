@@ -3,6 +3,7 @@ import 'package:myfirstapp_flutter/data/data_makanan.dart';
 import 'package:myfirstapp_flutter/model/model_makanan.dart';
 import 'package:myfirstapp_flutter/model/model_portaberita.dart';
 import 'package:myfirstapp_flutter/screens/makanan_screen.dart';
+import 'package:myfirstapp_flutter/screens/portalberita_screen.dart';
 
 class UIPortalBerita {
   ListView buildListView(List itemListBerita) {
@@ -13,7 +14,7 @@ class UIPortalBerita {
           return InkWell(
             splashColor: Colors.red,
             onTap: () {
-              Navigator.pushNamed(context, DetailMakanan.id, arguments: berita);
+              Navigator.pushNamed(context, DetailBerita.id, arguments: berita);
             },
             child: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -93,7 +94,7 @@ class UIPortalBerita {
         });
   }
 
-  Widget buildDetailMakanan(ModelMakanan makanan, BuildContext context) {
+  Widget buildDetailBerita(Articles berita, BuildContext context) {
     return Column(
       children: [
         InkWell(
@@ -101,17 +102,26 @@ class UIPortalBerita {
               Navigator.pop(context);
             },
             child: Hero(
-                tag: makanan.namaMkn, child: Image.asset(makanan.gambarMkn))),
+                tag: berita.title, child: Image.network(berita.urlToImage))),
         Text(
-          makanan.namaMkn,
+          berita.title,
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
         Text(
-          makanan.detailMkn,
+          berita.description,
           style: TextStyle(
             fontSize: 20,
           ),
-        )
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          berita.content,
+          style: TextStyle(
+            fontSize: 20,
+          ),
+        ),
       ],
     );
   }

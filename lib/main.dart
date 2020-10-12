@@ -28,6 +28,14 @@ class MyApp extends StatelessWidget {
           return MaterialPageRoute(builder: (context) {
             return DetailMakanan(makanan: settings.arguments);
           });
+        } else if (settings.name == DetailBerita.id) {
+          return MaterialPageRoute(builder: (context) {
+            return DetailBerita(berita: settings.arguments);
+          });
+        } else if (settings.name == WebBerita.id) {
+          return MaterialPageRoute(builder: (context) {
+            return WebBerita(webBerita: settings.arguments);
+          });
         }
       },
       initialRoute: SplashLoadingScreen.id,
