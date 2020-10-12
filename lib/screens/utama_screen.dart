@@ -3,8 +3,10 @@ import 'package:myfirstapp_flutter/screens/makanan_screen.dart';
 import 'package:myfirstapp_flutter/screens/minuman_screen.dart';
 import 'package:myfirstapp_flutter/screens/wa_screen.dart';
 
+import 'portalberita_screen.dart';
+
 class UtamaScreen extends StatelessWidget {
-    static String id = "utama";
+  static String id = "utama";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,7 @@ class UtamaScreen extends StatelessWidget {
                   tampilanMenu(Colors.green, "gambar/ojol.png", "Whatsapp",
                       context, WaScreen.id),
                   tampilanMenu(Colors.amber, "gambar/ojol.png", "Portal Berita",
-                      context, MakananScreen.id)
+                      context, PortalBeritaScreen.id)
                 ],
               ),
             ),
