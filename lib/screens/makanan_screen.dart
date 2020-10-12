@@ -4,6 +4,7 @@ import 'package:myfirstapp_flutter/model/model_makanan.dart';
 import 'package:myfirstapp_flutter/ui/ui_makanan.dart';
 
 class MakananScreen extends StatelessWidget {
+  static String id = "makanan";
   UIMakanan uimakanan = UIMakanan();
   @override
   Widget build(BuildContext context) {
@@ -17,6 +18,7 @@ class MakananScreen extends StatelessWidget {
 }
 
 class DetailMakanan extends StatelessWidget {
+  static String id = "detailmkn";
   UIMakanan uimakanan = UIMakanan();
   ModelMakanan makanan;
   // DetailMakanan(this.makanan, {this.nama});
@@ -30,12 +32,9 @@ class DetailMakanan extends StatelessWidget {
             IconButton(
                 icon: Icon(Icons.link),
                 onPressed: () {
-                  Navigator.push(
+                  Navigator.pushNamed(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => WebMakanan(
-                                webMakanan: makanan.webMkn,
-                              )));
+                       WebMakanan.id,arguments: makanan.webMkn);
                 })
           ],
         ),
@@ -44,6 +43,7 @@ class DetailMakanan extends StatelessWidget {
 }
 
 class WebMakanan extends StatelessWidget {
+  static String id = "webmkn";
   String webMakanan;
   WebMakanan({Key key, @required this.webMakanan}) : super(key: key);
 

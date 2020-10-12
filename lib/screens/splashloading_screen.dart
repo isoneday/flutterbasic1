@@ -5,6 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:splashscreen/splashscreen.dart';
 
 class SplashLoadingScreen extends StatelessWidget {
+  static String id = "splash";
+
   @override
   Widget build(BuildContext context) {
     return SplashScreen(
@@ -22,12 +24,10 @@ class SplashLoadingScreen extends StatelessWidget {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool sesi = prefs.getBool("sesi") ?? false;
     if (sesi == true) {
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => UtamaScreen()));
+      Navigator.pushReplacementNamed(context, UtamaScreen.id);
     } else {
       prefs.setBool("sesi", true);
-      Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => MyHomeApp()));
+      Navigator.pushReplacementNamed(context, MyHomeApp.id);
     }
   }
 }

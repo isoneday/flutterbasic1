@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myfirstapp_flutter/ui/ui_minuman.dart';
 
 class MinumanScreen extends StatelessWidget {
+    static String id = "minuman";
   UiMinuman minuman = UiMinuman();
   @override
   Widget build(BuildContext context) {

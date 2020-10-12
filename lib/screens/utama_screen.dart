@@ -4,6 +4,7 @@ import 'package:myfirstapp_flutter/screens/minuman_screen.dart';
 import 'package:myfirstapp_flutter/screens/wa_screen.dart';
 
 class UtamaScreen extends StatelessWidget {
+    static String id = "utama";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,9 +17,9 @@ class UtamaScreen extends StatelessWidget {
               child: Row(
                 children: [
                   tampilanMenu(Colors.amber, "gambar/ojol.png", "list minuman",
-                      context, MinumanScreen()),
+                      context, MinumanScreen.id),
                   tampilanMenu(Colors.green, "gambar/ojol.png", "list makanan",
-                      context, MakananScreen())
+                      context, MakananScreen.id)
                 ],
               ),
             ),
@@ -26,9 +27,9 @@ class UtamaScreen extends StatelessWidget {
               child: Row(
                 children: [
                   tampilanMenu(Colors.green, "gambar/ojol.png", "Whatsapp",
-                      context, WaScreen()),
-                  tampilanMenu(Colors.amber, "gambar/ojol.png", "list makanan",
-                      context, MakananScreen())
+                      context, WaScreen.id),
+                  tampilanMenu(Colors.amber, "gambar/ojol.png", "Portal Berita",
+                      context, MakananScreen.id)
                 ],
               ),
             ),
@@ -37,14 +38,13 @@ class UtamaScreen extends StatelessWidget {
   }
 
   Widget tampilanMenu(Color warna, String gambar, String title,
-      BuildContext context, Widget kelasTujuan) {
+      BuildContext context, String kelasTujuan) {
     return Flexible(
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: GestureDetector(
           onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => kelasTujuan));
+            Navigator.pushNamed(context, kelasTujuan);
           },
           child: Container(
             color: warna,

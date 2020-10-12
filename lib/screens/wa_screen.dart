@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myfirstapp_flutter/ui/ui_chat.dart';
 
 class WaScreen extends StatefulWidget {
+    static String id = "wa";
   @override
   _WaScreenState createState() => _WaScreenState();
 }

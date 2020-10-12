@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:myfirstapp_flutter/screens/utama_screen.dart';
 
 class MyHomeApp extends StatefulWidget {
+  static String id = "home";
   @override
   _MyHomeAppState createState() => _MyHomeAppState();
 }
@@ -141,8 +142,7 @@ class _MyHomeAppState extends State<MyHomeApp> {
       // If the form is valid, display a Snackbar.
       Scaffold.of(c).showSnackBar(SnackBar(content: Text('validasi berhasil')));
       //pindah halaman
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => UtamaScreen()));
+      Navigator.pushNamed(context, UtamaScreen.id);
     } else {
       Scaffold.of(c).showSnackBar(SnackBar(content: Text('validasi gagal')));
     }

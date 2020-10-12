@@ -12,12 +12,8 @@ class UIMakanan {
           return InkWell(
             splashColor: Colors.red,
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => DetailMakanan(
-                            makanan: makanan,
-                          )));
+              Navigator.pushNamed(context, DetailMakanan.id,
+                  arguments: makanan);
             },
             child: Padding(
               padding: const EdgeInsets.all(10.0),
