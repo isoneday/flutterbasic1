@@ -4,6 +4,7 @@ import 'package:myfirstapp_flutter/model/user.dart';
 import 'package:toast/toast.dart';
 
 class DatabaseSqfliteScreen extends StatefulWidget {
+  static String id = "database";
   @override
   _DatabaseSqfliteScreenState createState() => _DatabaseSqfliteScreenState();
 }
@@ -14,12 +15,17 @@ class _DatabaseSqfliteScreenState extends State<DatabaseSqfliteScreen> {
   var txtEmailController = TextEditingController();
   bool status = false;
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  GlobalKey<AnimatedListState> listKey = GlobalKey<AnimatedListState>();
+
   bool autoValidate = false;
   List<User> itemUser;
+  List<User> user;
+  bool insertData = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.green,
         title: Text("DATABASE SQFLite"),
       ),
       body: getAllData(),
@@ -36,11 +42,103 @@ class _DatabaseSqfliteScreenState extends State<DatabaseSqfliteScreen> {
     );
   }
 
-//get data from dbSqflite
+  createListView(BuildContext context, AsyncSnapshot snapshot) {
+    user = snapshot.data;
+    if (user != null) {
+      return AnimatedList(
+          key: listKey,
+          shrinkWrap: true,
+          initialItemCount: user.length,
+          itemBuilder: (context, index, animation) {
+            return buildItemList(user[index], animation, index);
+          });
+    } else {
+      return Container(
+        child: Text("tidak ada data"),
+      );
+    }
+  }
+
+  buildItemList(User user, Animation<double> animation, int index) {
+    return SizeTransition(
+      sizeFactor: animation,
+      child: Card(
+        child: ListTile(
+          // onTap: () => ,
+          title: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(right: 10),
+                child: Container(
+                  margin: EdgeInsets.only(top: 6),
+                  child: CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Colors.green,
+                    child: Text(
+                      user.name.substring(0, 1).toUpperCase(),
+                      style: TextStyle(fontSize: 30, color: Colors.white),
+                    ),
+                  ),
+                ),
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.account_circle),
+                      Text(user.name, style: TextStyle(fontSize: 17)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.phone),
+                      Text(user.phone, style: TextStyle(fontSize: 17)),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Icon(Icons.email),
+                      Text(user.email, style: TextStyle(fontSize: 17)),
+                    ],
+                  ),
+                ],
+              )
+            ],
+          ),
+          trailing: Column(
+            children: [
+              Flexible(
+                child: IconButton(
+                  icon: Icon(Icons.edit),
+                  onPressed: () => onEdit(user, index),
+                  color: Colors.green[800],
+                ),
+              ),
+              Flexible(
+                child: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () => onDelete(user, index),
+                  color: Colors.green[800],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  //get data from dbSqflite
   getDataUser() async {
     var dbHelper = Helper();
     await dbHelper.getAllUsers().then((value) {
       itemUser = value;
+      if (insertData == true) {
+        listKey.currentState.insertItem(user.length);
+        insertData = false;
+      }
     });
     return itemUser;
   }
@@ -75,6 +173,7 @@ class _DatabaseSqfliteScreenState extends State<DatabaseSqfliteScreen> {
           contentPadding: EdgeInsets.only(top: 12),
           content: Container(
             width: 300,
+            height: 400,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -133,6 +232,8 @@ class _DatabaseSqfliteScreenState extends State<DatabaseSqfliteScreen> {
                         InkWell(
                           onTap: () => status ? editUser(user.id) : addUser(),
                           child: Container(
+                            padding: EdgeInsets.only(
+                                top: 50, bottom: 50, left: 100, right: 100),
                             decoration: BoxDecoration(
                                 color: Colors.green,
                                 borderRadius: BorderRadius.only(
@@ -205,6 +306,9 @@ class _DatabaseSqfliteScreenState extends State<DatabaseSqfliteScreen> {
         txtPhoneController.text = "";
         Navigator.pop(context);
         Toast.show("succesfully added data user", context);
+        setState(() {
+          insertData = true;
+        });
       });
     } else {
       setState(() {
@@ -213,5 +317,44 @@ class _DatabaseSqfliteScreenState extends State<DatabaseSqfliteScreen> {
     }
   }
 
-  editUser(int id) {}
+  editUser(int id) {
+    if (formKey.currentState.validate()) {
+      var user = User();
+      user.id = id;
+      user.name = txtNameController.text;
+      user.email = txtEmailController.text;
+      user.phone = txtPhoneController.text;
+      var helper = Helper();
+      helper.update(user).then((value) {
+        txtNameController.text = "";
+        txtEmailController.text = "";
+        txtPhoneController.text = "";
+        Navigator.pop(context);
+        Toast.show("Data updated Successfully", context);
+        setState(() {
+          status = false;
+        });
+      });
+    } else {
+      setState(() {
+        autoValidate = true;
+      });
+    }
+  }
+
+  onDelete(User user, int index) {
+    var id = user.id;
+    var helper = Helper();
+    helper.delete(id).then((value) {
+      User userRemove = itemUser.removeAt(index);
+      AnimatedListRemovedItemBuilder builder = (context, animation) {
+        return buildItemList(userRemove, animation, index);
+      };
+      listKey.currentState.removeItem(index, builder);
+    });
+  }
+
+  onEdit(User user, int index) {
+    openAlert(user);
+  }
 }

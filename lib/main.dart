@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:myfirstapp_flutter/screens/camera_screen.dart';
+import 'package:myfirstapp_flutter/screens/databasesqflite_screen.dart';
 import 'package:myfirstapp_flutter/screens/home_screen.dart';
 import 'package:myfirstapp_flutter/screens/makanan_screen.dart';
 import 'package:myfirstapp_flutter/screens/quiz_screen.dart';
@@ -95,6 +96,8 @@ class _MyAppState extends State<MyApp> {
         WaScreen.id: (context) => WaScreen(),
         CameraScreen.id: (context) => CameraScreen(),
         QuizScreen.id: (context) => QuizScreen(),
+        DatabaseSqfliteScreen.id: (context) => DatabaseSqfliteScreen(),
+
         // DetailMakanan.id: (context) => DetailMakanan(),
         // WebMakanan.id: (context) => WebMakanan(),
       },
