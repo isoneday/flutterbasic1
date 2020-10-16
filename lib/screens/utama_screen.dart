@@ -3,6 +3,7 @@ import 'package:myfirstapp_flutter/screens/camera_screen.dart';
 import 'package:myfirstapp_flutter/screens/makanan_screen.dart';
 import 'package:myfirstapp_flutter/screens/minuman_screen.dart';
 import 'package:myfirstapp_flutter/screens/quiz_screen.dart';
+import 'package:myfirstapp_flutter/screens/statemanagement_screens.dart';
 import 'package:myfirstapp_flutter/screens/wa_screen.dart';
 
 import 'portalberita_screen.dart';
@@ -40,10 +41,20 @@ class UtamaScreen extends StatelessWidget {
             Flexible(
               child: Row(
                 children: [
-                  tampilanMenu(Colors.green, "gambar/ojol.png", "Camera",
+                  tampilanMenu(Colors.amber, "gambar/ojol.png", "Camera",
                       context, CameraScreen.id),
-                  tampilanMenu(Colors.amber, "gambar/ojol.png", "Quiz Screen",
+                  tampilanMenu(Colors.green, "gambar/ojol.png", "Quiz Screen",
                       context, QuizScreen.id)
+                ],
+              ),
+            ),
+            Flexible(
+              child: Row(
+                children: [
+                  tampilanMenu(Colors.green, "gambar/ojol.png", "state management",
+                      context, StateManagementScreen.id),
+                  tampilanMenu(Colors.amber, "gambar/ojol.png", "database sqflite",
+                      context, PortalBeritaScreen.id)
                 ],
               ),
             ),
