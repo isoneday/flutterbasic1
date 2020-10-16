@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:myfirstapp_flutter/config.dart';
 import 'package:myfirstapp_flutter/screens/camera_screen.dart';
 import 'package:myfirstapp_flutter/screens/databasesqflite_screen.dart';
 import 'package:myfirstapp_flutter/screens/makanan_screen.dart';
@@ -15,7 +16,8 @@ class UtamaScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("Utama Screen"),
+          title: Text(Config.appString),
+          leading: Config.appIcon,
         ),
         body: Column(
           children: [
@@ -52,10 +54,10 @@ class UtamaScreen extends StatelessWidget {
             Flexible(
               child: Row(
                 children: [
-                  tampilanMenu(Colors.green, "gambar/ojol.png", "state management",
-                      context, StateManagementScreen.id),
-                  tampilanMenu(Colors.amber, "gambar/ojol.png", "database sqflite",
-                      context, DatabaseSqfliteScreen.id)
+                  tampilanMenu(Colors.green, "gambar/ojol.png",
+                      "state management", context, StateManagementScreen.id),
+                  tampilanMenu(Colors.amber, "gambar/ojol.png",
+                      "database sqflite", context, DatabaseSqfliteScreen.id)
                 ],
               ),
             ),
